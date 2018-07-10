@@ -16,8 +16,8 @@ permalink: /about/
 * {{ website.sitename }}：[@{{ website.name }}]({{ website.url }})
 {% endfor %}
 
+[^_^]:
 ## Skill Keywords
-
 {% for category in site.data.skills %}
 ### {{ category.name }}
 <div class="btn-inline">

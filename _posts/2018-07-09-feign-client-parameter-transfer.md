@@ -39,11 +39,11 @@ public String test3(@RequestBody(required = false) User user, HttpServletRequest
 	return "[test3]userName=" + user.getUserName() + ", age=" + user.getAge();
 }
 ```
-@RequestBody接收的是一个Json对象的字符串，而不是一个Json对象
+@RequestBody接收的是一个Json对象的字符串，而不是一个Json对象<br />
 如果这时候要使用postman直接请求上面的test3接口，那么需要将Content-Type修改为application/json
-![image](/images/posts/springcloud/postman-request-body.png)
+![image](/images/posts/springcloud/postman-request-body.png)<br />
 这样做虽然解决了feign传对象的问题，但是直接请求/test3接口就麻烦了，不能直接使用form-data的形式了。
-这里使用RequestInteceptor来解决。[参考资源](https://github.com/spring-cloud/spring-cloud-netflix/issues/1253)
+这里使用RequestInteceptor来解决。
 
 
 - ### 传对象 + RequestInteceptor
@@ -106,8 +106,8 @@ public class YryzRequestInterceptor implements RequestInterceptor {
 }
 ```
 
-- ### 其他参考资料
-https://www.jianshu.com/p/7ce46c0ebe9d
+- ### 参考资料
+[https://github.com/spring-cloud/spring-cloud-netflix/issues/1047](https://github.com/spring-cloud/spring-cloud-netflix/issues/1047)
 
 
 

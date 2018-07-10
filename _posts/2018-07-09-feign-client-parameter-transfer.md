@@ -20,7 +20,6 @@ public interface DemoService {
 - ### 传Map传参数
 参数太多的时候，上面的方式就要写一堆，可以直接上map <br />
 注意，需要加@RequestParam注解，但不需要加注解的value参数
-
 ```java
 @RequestMapping("/demo-service/test4")
 public String test4(@RequestParam Map<String,Object> userMap);
@@ -34,7 +33,6 @@ Fegin传对象的时候，需要加@RequestBody注解，如下：
 public String test3(@RequestBody DemoServiceUser user);
 ```
 注意，服务提供者的Controller的接收参数前也需要加@RequestBody注解
-
 ```java
 @RequestMapping("/test3")
 public String test3(@RequestBody(required = false) User user, HttpServletRequest request) {
@@ -43,10 +41,8 @@ public String test3(@RequestBody(required = false) User user, HttpServletRequest
 ```
 @RequestBody接收的是一个Json对象的字符串，而不是一个Json对象
 如果这时候要使用postman直接请求上面的test3接口，那么需要将Content-Type修改为application/json
-![image](https://img-blog.csdn.net/20170315152520135?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYWZ0ZXJsaWZlX3FpeWU=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
-
+![image](/images/posts/springcloud/postman-request-body.png)
 这样做虽然解决了feign传对象的问题，但是直接请求/test3接口就麻烦了，不能直接使用form-data的形式了。
-
 这里使用RequestInteceptor来解决。[参考资源](https://github.com/spring-cloud/spring-cloud-netflix/issues/1253)
 
 
@@ -110,8 +106,7 @@ public class YryzRequestInterceptor implements RequestInterceptor {
 }
 ```
 
-
-其他参考资料
+- ### 其他参考资料
 https://www.jianshu.com/p/7ce46c0ebe9d
 
 

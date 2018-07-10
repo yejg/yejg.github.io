@@ -5,6 +5,7 @@ categories: [SpringCloud]
 description: SpringCloud之注册中心
 keywords: SpringCloud, eureka, Registry Center
 ---
+
 ## 一、SpringCloud注册中心搭建
 
 注册中心使用Eureka<br />

@@ -33,7 +33,7 @@ Fegin传对象的时候，需要加@RequestBody注解，如下：
 @RequestMapping("/demo-service/test3")
 public String test3(@RequestBody DemoServiceUser user);
 ```
-注意，==服务提供者的Controller的接收参数前也需要加@RequestBody注解==
+注意，服务提供者的Controller的接收参数前也需要加@RequestBody注解
 
 ```java
 @RequestMapping("/test3")

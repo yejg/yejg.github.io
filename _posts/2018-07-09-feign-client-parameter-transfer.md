@@ -1,12 +1,20 @@
+---
+layout: post
+title: Feign客户端参数传递
+categories: [SpringCloud]
+description: SpringCloud之feign客户端参数传递用法。看完立马就会撸代码了~
+keywords: SpringCloud, feign, 参数
+---
+
 - ### 传基本类型参数
 使用@RequestParam，注意注解的value参数不可少，代码如下：
 ```java
-    @FeignClient(value = "demo-service", fallback = DemoServiceFallback.class) 
-    public interface DemoService {
+@FeignClient(value = "demo-service", fallback = DemoServiceFallback.class) 
+public interface DemoService {
 
-        @RequestMapping("/demo-service/test1")
-        public String test1(@RequestParam(value = "userName") String userName, @RequestParam(value = "age") int age);
-    }
+    @RequestMapping("/demo-service/test1")
+    public String test1(@RequestParam(value = "userName") String userName, @RequestParam(value = "age") int age);
+}
 ```
 
 - ### 传Map传参数
@@ -14,24 +22,24 @@
 注意，需要加@RequestParam注解，但不需要加注解的value参数
 
 ```java
-    @RequestMapping("/demo-service/test4")
-    public String test4(@RequestParam Map<String,Object> userMap);
+@RequestMapping("/demo-service/test4")
+public String test4(@RequestParam Map<String,Object> userMap);
 ```
 
 
 - ### 传对象
 Fegin传对象的时候，需要加@RequestBody注解，如下：
 ```java
-    @RequestMapping("/demo-service/test3")
-    public String test3(@RequestBody DemoServiceUser user);
+@RequestMapping("/demo-service/test3")
+public String test3(@RequestBody DemoServiceUser user);
 ```
 注意，==服务提供者的Controller的接收参数前也需要加@RequestBody注解==
 
 ```java
-	@RequestMapping("/test3")
-	public String test3(@RequestBody(required = false) User user, HttpServletRequest request) {
-		return "[test3]userName=" + user.getUserName() + ", age=" + user.getAge();
-	}
+@RequestMapping("/test3")
+public String test3(@RequestBody(required = false) User user, HttpServletRequest request) {
+	return "[test3]userName=" + user.getUserName() + ", age=" + user.getAge();
+}
 ```
 @RequestBody接收的是一个Json对象的字符串，而不是一个Json对象
 如果这时候要使用postman直接请求上面的test3接口，那么需要将Content-Type修改为application/json

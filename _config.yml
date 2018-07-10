@@ -87,7 +87,7 @@ repository: yejg/yejg.github.io
 #      Comments    #
 # ---------------- #
 # support provider: disqus, gitment, gitalk
-comments_provider: 
+comments_provider: gitalk
 # !!!重要!!! 请修改下面这些信息为你自己申请的
 # !!!Important!!! Please modify infos below to yours
 # https://disqus.com
@@ -102,10 +102,10 @@ gitment:
         client_secret: b42a4178e5fd4a7cf63189ef4b1453b05c375709
 # https://github.com/gitalk/gitalk#install
 gitalk:
-    owner: mzlogin
+    owner: yejg
     repo: blog-comments
-    clientID: d2e1cbbd298958076462
-    clientSecret: b42a4178e5fd4a7cf63189ef4b1453b05c375709
+    clientID: 2c06414ea5478f28fba0
+    clientSecret: 864effc70d88514161088ecf9bf543890bdc10eb
 # 在使用其它评论组件时可点击显示 Disqus
 lazy_load_disqus : false
 

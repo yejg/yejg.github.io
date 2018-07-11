@@ -103,7 +103,7 @@ gitment:
 # https://github.com/gitalk/gitalk#install
 gitalk:
     owner: yejg
-    repo: blog-comments
+    repo: yejg.github.io
     clientID: 206b5549454ba9f6b071
     clientSecret: edf05493ca6a15c65a6a67bbad7b47ba4b328c00
     admin: yejg

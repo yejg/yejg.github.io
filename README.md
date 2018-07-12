@@ -1,3 +1,3 @@
-# yejg.github.io
-
-#### 初始化提交，稍后再整理添加
+My GitHub Pages <br />
+Thanks to @mzlogin<br />
+For more information, see https://github.com/mzlogin/mzlogin.github.io

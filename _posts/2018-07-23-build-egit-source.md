@@ -1,6 +1,6 @@
 ---
 layout: post
-title: template page
+title: Eclipse插件改造之EGit源码编译
 categories: [eclipse plug-in, egit]
 description: EGit源码编译
 keywords: eclipse, plugin, plug-in, egit

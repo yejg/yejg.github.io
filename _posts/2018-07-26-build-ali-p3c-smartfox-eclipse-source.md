@@ -1,9 +1,9 @@
 ---
 layout: post
 title: Alibaba smartfox-eclipse插件源码编译
-categories: [eclipse plug-in]
+categories: [eclipse plug-in, p3c]
 description: Alibaba smartfox-eclipse插件源码编译
-keywords: eclipse, plugin, plug-in, smartfox
+keywords: eclipse, plugin, plug-in, p3c, smartfox
 ---
 ### smartfox-eclipse插件源码编译
 Alibaba的代码检查插件有2个版本：eclipse和idea，此文是eclipse版本的插件编译说明。

@@ -50,53 +50,53 @@ keywords: eclipse, plugin, plug-in, smartfox, p3c
 2. 覆写public Object visit(ASTWhileStatement node, Object data)方法。
 代码如下：
 
-```java
-import net.sourceforge.pmd.lang.ast.Node;
-import net.sourceforge.pmd.lang.java.ast.ASTBlock;
-import net.sourceforge.pmd.lang.java.ast.ASTWhileStatement;
-import net.sourceforge.pmd.lang.java.rule.AbstractJavaRule;
+	```java
+	import net.sourceforge.pmd.lang.ast.Node;
+	import net.sourceforge.pmd.lang.java.ast.ASTBlock;
+	import net.sourceforge.pmd.lang.java.ast.ASTWhileStatement;
+	import net.sourceforge.pmd.lang.java.rule.AbstractJavaRule;
 
-public class WhileLoopsMustUseBracesRule extends AbstractJavaRule {
-    public Object visit(ASTWhileStatement node, Object data) {
-        Node firstStmt = node.jjtGetChild(1);
-        if (!hasBlockAsFirstChild(firstStmt)) {
-            addViolation(data, node);
-        }
-        return super.visit(node, data);
-    }
+	public class WhileLoopsMustUseBracesRule extends AbstractJavaRule {
+		public Object visit(ASTWhileStatement node, Object data) {
+			Node firstStmt = node.jjtGetChild(1);
+			if (!hasBlockAsFirstChild(firstStmt)) {
+				addViolation(data, node);
+			}
+			return super.visit(node, data);
+		}
 
-    private boolean hasBlockAsFirstChild(Node node) {
-        return (node.jjtGetNumChildren() != 0 && (node.jjtGetChild(0) instanceof ASTBlock));
-    }
-}
+		private boolean hasBlockAsFirstChild(Node node) {
+			return (node.jjtGetNumChildren() != 0 && (node.jjtGetChild(0) instanceof ASTBlock));
+		}
+	}
 
-```
+	```	
 3. 参考pmd源码中的xml文件，建一个自己的规则集，例如：
-
-```
-<?xml version="1.0"?>
-<ruleset name="My custom rules"
-    xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
-    <rule name="WhileLoopsMustUseBracesRule"
-          message="Avoid using 'while' statements without curly braces"
-          class="net.sourceforge.pmd.lang.java.test.WhileLoopsMustUseBracesRule">
-      <description>
-      Avoid using 'while' statements without using curly braces
-      </description>
-        <priority>3</priority>
- 
-      <example>
-<![CDATA[
-    public void doSomething() {
-      while (true)
-          x++;
-    }
-]]>
-      </example>
-    </rule>
-```
+	
+	```
+	<?xml version="1.0"?>
+	<ruleset name="My custom rules"
+		xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+		<rule name="WhileLoopsMustUseBracesRule"
+			  message="Avoid using 'while' statements without curly braces"
+			  class="net.sourceforge.pmd.lang.java.test.WhileLoopsMustUseBracesRule">
+		  <description>
+		  Avoid using 'while' statements without using curly braces
+		  </description>
+			<priority>3</priority>
+	 
+		  <example>
+	<![CDATA[
+		public void doSomething() {
+		  while (true)
+			  x++;
+		}
+	]]>
+		  </example>
+		</rule>
+	```
 4. 运行验证   
 可以打包然后使用pmd.bat命令
 > pmd.bat -d c:\path\to\my\src -f xml -R c:\path\to\mycustomrules.xml

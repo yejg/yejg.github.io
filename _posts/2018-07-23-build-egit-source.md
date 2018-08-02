@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Eclipse插件改造之EGit源码编译
+title: Eclipse插件改造——EGit源码编译
 categories: [eclipse plug-in, egit]
 description: EGit源码编译
 keywords: eclipse, plugin, plug-in, egit
@@ -46,7 +46,7 @@ maven需安装tycho
 把从git上克隆下来的代码导入到eclipse  
 依次点击eclipse的【 Import > Existing Projects into Workspace】即可。  
 导入之后，如果有编译错误，请检查前面的[2.2](#2.2)   
-++**JGit和EGit需要在同级目录**++   
+**JGit和EGit需要在同级目录**   
 
 在Eclipse中导入EGit和JGit项目后，由于缺少依赖项，它们将无法编译。设置目标平台以解决此问题：   
 - 打开EGit中的org.eclipse.egit.target项目

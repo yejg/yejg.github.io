@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Alibaba smartfox-eclipse插件源码编译
+title: Eclipse插件改造——AlibabaSmartfoxEclipse插件源码编译
 categories: [eclipse plug-in, p3c]
 description: Alibaba smartfox-eclipse插件源码编译
 keywords: eclipse, plugin, plug-in, p3c, smartfox

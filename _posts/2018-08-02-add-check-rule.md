@@ -7,8 +7,8 @@ keywords: eclipse, plugin, plug-in, smartfox, p3c
 ---
 ## 前言
 前面已经写了2篇介绍了源码编译了
-- [EGit源码编译](/2018-07-23-build-egit-source.md)
-- [Alibaba smartfox-eclipse插件源码编译](/2018-07-26-build-ali-p3c-smartfox-eclipse-source.md)
+- [EGit源码编译](https://yejg.top/2018/07/23/build-egit-source/)
+- [Alibaba smartfox-eclipse插件源码编译](https://yejg.top/2018/07/26/build-ali-p3c-smartfox-eclipse-source/)
 
 编译成功了，就该朝着目标去改造了。  
 根据公司现有代码的情况，希望能增加一条校验规则

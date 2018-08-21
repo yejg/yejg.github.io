@@ -28,7 +28,7 @@ https://p3c.alibaba.com/plugin/eclipse/update
 ![image](/images/posts/eclipse-plugin/smartfox-compile-error.png)
 
 解决办法：
-- 删除[com.alibaba.smartfox.eclipse.marker]，因为源码中确实没有这个包
+- 删除[com.alibaba.smartfox.eclipse.marker]，因为源码中确实没有这个包，[Issues367](https://github.com/alibaba/p3c/issues/367) 
 - eclipse默认值添加了[src/main/java]到classpath，并没有添加kotlin，所以需要添加[src/main/kotlin]到classpath。
 - 按照上面2步骤操作之后，clean一下应该就ok了
 

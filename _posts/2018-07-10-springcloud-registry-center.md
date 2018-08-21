@@ -200,7 +200,7 @@ public class DemoServiceApp {
 ## 三、 其他说明
 spring cloud中discovery service有许多种实现（eureka、consul、zookeeper等等）<br/>@EnableDiscoveryClient基于spring-cloud-commons<br/>@EnableEurekaClient基于spring-cloud-netflix。<br/>
 如果选用的注册中心是eureka，那么就推荐@EnableEurekaClient，如果是其他的注册中心，那么推荐使用@EnableDiscoveryClient。<br/>
-https://blog.csdn.net/hh652400660/article/details/79474419
+参考：<https://blog.csdn.net/hh652400660/article/details/79474419>
 
 　
 　　

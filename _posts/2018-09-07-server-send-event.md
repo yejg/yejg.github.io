@@ -97,7 +97,6 @@ public void pushV2(HttpServletResponse response) {
 
 2、Controller端处理完return返回之后，前端页面会收到一个error事件。浏览器接收到error事件后，SSE又会自动重连，所以我加了一个source.close();
    当然这里close不合理，后面再聊合理的做法
-   
 ```
 这里需要知道的是：return之后长连接就断开了，就不是我们想要的持续推送了。  
 修改后的代码见Github:  

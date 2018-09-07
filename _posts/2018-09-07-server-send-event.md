@@ -62,31 +62,31 @@ if (!!window.EventSource) {
 需要设置类型为event-stream
 ```
 @RequestMapping(value = "/pushV2", produces = "text/event-stream")
-	public void pushV2(HttpServletResponse response) {
-		response.setContentType("text/event-stream");
-		response.setCharacterEncoding("utf-8");
-		int count = 0;
-		while (true) {
-			Random r = new Random();
-			try {
-				Thread.sleep(1000);
-				PrintWriter pw = response.getWriter();
-				// 如果浏览器直接关闭，需要check一下
-				if (pw.checkError()) {
-					System.out.println("客户端主动断开连接");
-					return;
-				}
-				pw.write("data:Testing 1,2,3" + r.nextInt() + "\n\n");
-				pw.flush();
-				count++;
-				if(count>5){
-					return;
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
+public void pushV2(HttpServletResponse response) {
+	response.setContentType("text/event-stream");
+	response.setCharacterEncoding("utf-8");
+	int count = 0;
+	while (true) {
+		Random r = new Random();
+		try {
+			Thread.sleep(1000);
+			PrintWriter pw = response.getWriter();
+			// 如果浏览器直接关闭，需要check一下
+			if (pw.checkError()) {
+				System.out.println("客户端主动断开连接");
+				return;
 			}
+			pw.write("data:Testing 1,2,3" + r.nextInt() + "\n\n");
+			pw.flush();
+			count++;
+			if(count>5){
+				return;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
+}
 ```
 以上客户端和服务端的代码示例基于<http://blog.longjiazuo.com/archives/1489>  
 做了如下修改：

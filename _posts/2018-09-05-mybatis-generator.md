@@ -389,11 +389,12 @@ introspectedColumn.getRemarks()
 ```
 <property name="useActualColumnNames" value="true" />
 ```
-不过这么一来，bean中的字段就都变成大写的了，期望生成user_id的形式，可通过修改源码来解决
+不过这么一来，bean中的字段就都变成大写的了，期望生成user_id的形式，可通过[修改源码](https://github.com/yejg/mybatis-generator/blob/569564e7fd7a0c346c878adc0ae39bc2eaef5558/src/main/java/org/mybatis/generator/internal/db/DatabaseIntrospector.java#L530)来解决
 ```
 // DatabaseIntrospector#getColumns，把column_name先toLowerCase处理一下
 introspectedColumn.setActualColumnName(rs.getString("COLUMN_NAME").toLowerCase());
 ```
+
 
 ## 关于代码
 以上代码已经上传到[github](https://github.com/yejg/mybatis-generator)

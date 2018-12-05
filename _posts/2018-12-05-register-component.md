@@ -79,7 +79,7 @@ public @interface Import {
 源码注释写的也很清楚，可以引入 配置类、ImportSelector、ImportBeanDefinitionRegistrar，甚至是普通class。 通过@Import，我们可以使用如下方式注册组件：
 
 ```java
-@Import({Person.class, MyImportSelector.class,MyImportBeanDefinitionRegistrar.class}）
+@Import({Person.class, MyImportSelector.class,MyImportBeanDefinitionRegistrar.class})
 ```
 
 其中：

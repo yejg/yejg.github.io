@@ -12,7 +12,7 @@ keywords: Spring, 容器, 注册
 
 ```xml
 <bean class="">
-	<property name="" value=""></property>
+    <property name="" value=""></property>
 </bean>
 ```
 ##### 2、通过注解
@@ -26,7 +26,7 @@ keywords: Spring, 容器, 注册
 ```java
 @Bean
 public Person person(){
-	return new Person("张三", 20);
+    return new Person("张三", 20);
 }
 ```
 
@@ -68,11 +68,11 @@ applicationContext.getBean("&personFactoryBean")
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Import {
-	/**
-	 * {@link Configuration}, {@link ImportSelector}, {@link ImportBeanDefinitionRegistrar}
-	 * or regular component classes to import.
-	 */
-	Class<?>[] value();
+    /**
+    * {@link Configuration}, {@link ImportSelector}, {@link ImportBeanDefinitionRegistrar}
+    * or regular component classes to import.
+    */
+    Class<?>[] value();
 }
 ```
 
@@ -97,7 +97,7 @@ public class MyImportBeanDefinitionRegistrar implements ImportBeanDefinitionRegi
         RootBeanDefinition beanDefinition = new RootBeanDefinition(Person.class);
         // 注册一个Bean，指定bean名
         registry.registerBeanDefinition("person", beanDefinition);
-    }
+      }
 }
     ```
 

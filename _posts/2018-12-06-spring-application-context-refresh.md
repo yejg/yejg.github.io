@@ -1,3 +1,10 @@
+---
+layout: post
+title: Spring容器的创建刷新过程
+categories: [Spring]
+description: Spring容器的创建刷新过程源码解析
+keywords: Spring, Spring容器
+---
 #### Spring容器的创建刷新过程
 
 以AnnotionConfigApplicationContext为例，在new一个AnnotionConfigApplicationContext的时候，其构造函数内就会调用父类的refresh方法

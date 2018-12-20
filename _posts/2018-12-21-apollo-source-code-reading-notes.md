@@ -7,7 +7,7 @@ keywords: apollo, 携程apollo, ctripcorp apollo
 ---
 ## Apollo源码阅读笔记（二）
 
-[前面](2018-12-20-apollo-source-code-reading-notes.md) 分析了apollo配置设置到Spring的environment的过程，此文继续PropertySourcesProcessor.postProcessBeanFactory里面调用的第二个方法initializeAutoUpdatePropertiesFeature(beanFactory)，其实也就是配置修改后更新相关处理逻辑。
+[前面](/2018/12/20/apollo-source-code-reading-notes/) 分析了apollo配置设置到Spring的environment的过程，此文继续PropertySourcesProcessor.postProcessBeanFactory里面调用的第二个方法initializeAutoUpdatePropertiesFeature(beanFactory)，其实也就是配置修改后更新相关处理逻辑。
 
 
 

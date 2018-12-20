@@ -7,23 +7,65 @@ keywords: apollo, 携程apollo, ctripcorp apollo
 ---
 ## Apollo源码阅读笔记（二）
 
-[前面](2018-12-20-apollo-source-code-reading-notes.md) 分析了apollo配置设置到Spring的environment的过程，此文继续PropertySourcesProcessor.postProcessBeanFactory里面调用的第二个方法initializeAutoUpdatePropertiesFeature(beanFactory)，其实也就是配置修改更新相关处理。
+[前面](2018-12-20-apollo-source-code-reading-notes.md) 分析了apollo配置设置到Spring的environment的过程，此文继续PropertySourcesProcessor.postProcessBeanFactory里面调用的第二个方法initializeAutoUpdatePropertiesFeature(beanFactory)，其实也就是配置修改后更新相关处理逻辑。
 
 
 
-### 1.  配置更新监听listener
+在继续分析之前，先来看下配置是怎么自动更新的。
+### 1. 配置更新简单示例
 
-通过apollo的portal页面修改配置时，期望客户端能收到变化事件通知。这个逻辑其实也在PropertySourcesProcessor.postProcessBeanFactory –> initializeAutoUpdatePropertiesFeature中。具体逻辑如下：
+通过portal页面，修改配置之后，我们可以通过@ApolloConfigChangeListener来自己监听配置的变化手动更新，也可以通过@Value标记字段，字段值会自动更新。
 
-1.  构造一个 AutoUpdateConfigChangeListener 对象；
+#### 1.1 更新event相关对象
 
-2.  拿到前面处理的所有的ConfigPropertySource组成的list，遍历ConfigPropertySource，设置listener
+无论是哪种方式，都离不开event，所以先了解下event相关的对象
 
-    ​	configPropertySource.addChangeListener(autoUpdateConfigChangeListener);
+```java
+// change事件
+public class ConfigChangeEvent {
+  private final String m_namespace;
+  private final Map<String, ConfigChange> m_changes;
+  // 省略了全部方法  
+}
+
+// change实体bean
+public class ConfigChange {
+  private final String namespace;
+  private final String propertyName;
+  private String oldValue;
+  private String newValue;
+  private PropertyChangeType changeType;
+  // 省略了全部方法  
+}
+
+// change类型
+public enum PropertyChangeType {
+  ADDED, MODIFIED, DELETED
+}
+```
+
+#### 1.2 Value注解方式
+
+直接在属性字段上标记@Value就可以了。
+
+eg：
+
+```java
+@Service
+public class XXXService {
+    @Value("${config.key}")
+    private String XXConfig;
+    ....
+}
+```
+
+如果修改了config.key配置项，那么这里的XXConfig的值是会自动更新的。
 
 
 
-不过更多的时候，我们是通过在方法上标记@ApolloConfigChangeListener来实现自己的监听处理，例如：
+#### 1.3 自定义ConfigChangeListener方式
+
+@Value方式实现起来很简单，但如果要更灵活点，比如加上一些自己的业务处理，那就需要用到@ApolloConfigChangeListener了。
 
 ```java
 @ApolloConfigChangeListener
@@ -32,6 +74,68 @@ private void onChange(ConfigChangeEvent changeEvent) {
 	doSomething();
 }
 ```
+
+标记有@ApolloConfigChangeListener的这个方法，必须带一个ConfigChangeEvent的入参，通过这个event可以拿到事件的类型、变化的具体字段、变化前后值。
+
+拿到event之后，我们可以根据具体的变化做不同业务处理。
+
+
+
+以上是更新的使用，下面来深入研究下源码的实现。
+
+
+
+### 2.  配置更新监听listener
+
+先继续文章开头留下的尾巴 initializeAutoUpdatePropertiesFeature方法。
+
+#### 2.1 AutoUpdateConfigChangeListener
+
+PropertySourcesProcessor.postProcessBeanFactory –> initializeAutoUpdatePropertiesFeature中。具体逻辑如下：
+
+1.  构造一个 AutoUpdateConfigChangeListener 对象 [implements ConfigChangeListener]；
+
+2.  拿到前面处理的所有的ConfigPropertySource组成的list，遍历ConfigPropertySource，设置listener
+
+    ​	configPropertySource.addChangeListener(autoUpdateConfigChangeListener);
+
+    ​	这里加事件，最终是加在Config上了。
+
+
+
+我们前面使用的@Value注解标记的字段，在字段值发生变化时，就是通过这里加的listener，收到通知的。
+
+@Value是org.springframework.beans.factory.annotation.value，Spring的注解。apollo通过自己的SpringValueProcessor来处理它。来看下完整的流程：
+
+1.  SpringValueProcessor继承了ApolloProcessor，间接实现了BeanPostProcessor
+
+2.  在启动的时候，会被调到 postProcessBeforeInitialization，进而调到processField
+    1.  判断字段是否被@Value标记，如果没有则返回，有则继续往下
+    2.  解析@Value注解里面设置的value
+    3.  构造SpringValue对象 new SpringValue(key, value.value(), bean, beanName, field, false)
+    4.  将构造的springValue存到SpringValueRegistry的Map<BeanFactory, Multimap<String, SpringValue>>中
+
+3.  当修改配置发布事件后，AutoUpdateConfigChangeListener就被触发onChange(ConfigChangeEvent changeEvent)事件
+
+    1.  通过event拿到所有变更的keys
+
+    2.  遍历keys，通过springValueRegistry.get(beanFactory, key) 拿到SpringValue集合对象
+
+        ​	这里就是从前面的2.4的map里面获取的
+
+    3.  判断配置是否真的发生了变化 shouldTriggerAutoUpdate(changeEvent, key)
+
+    4.  遍历SpringValue集合，逐一通过反射改变字段的值
+
+到这里，@Value的更新流程就清楚了。
+
+下面来看看自定义listener是怎么通知更新的。
+
+
+
+#### 2.2 ConfigChangeListener
+
+更多的时候，我们是通过在方法上标记@ApolloConfigChangeListener来实现自己的监听处理。[例子见1.3代码]
 
 通过@ApolloConfigChangeListener注解添加的监听方法，默认关注的application namespace下的全部配置项。
 
@@ -73,9 +177,11 @@ protected void processMethod(final Object bean, String beanName, final Method me
 
 经过这段代码处理，如果有change事件，我们通过@ApolloConfigChangeListener自定义的listener就会收到消息了。
 
+前面了解完了监听，下面来看下事件的发布。
 
 
-### 2.  配置更新事件发布
+
+### 3.  配置更新事件发布
 
 后台portal页面修改发布之后，client端怎么接收到事件呢？其实在client启动后，就会和服务端建一个长连接。代码见 com.ctrip.framework.apollo.internals.RemoteConfigRepository 。
 
@@ -151,4 +257,14 @@ public RemoteConfigRepository(String namespace) {
 
         ​	this.fireConfigChange(new **ConfigChangeEvent**(m_namespace, actualChanges));
 
-至此，事件的发布监听就形成闭环了，这里fireConfigChange(ConfigChangeEvent)后，在前一节里面就会收到通知了。
+    5.  在DefaultConfig的this.fireConfigChange里面，就会遍历 listeners，依次调用onChange方法
+
+        ​	准确的说，是在父类AbstractConfig中实现的；
+
+        ​	这里的listeners就有前面提到的AutoUpdateConfigChangeListener 和 ApolloAnnotationProcessor 中定义的ConfigChangeListener
+
+至此，事件的发布监听就形成闭环了，这里fireConfigChange(ConfigChangeEvent)后，@Value标记的字段、@ApolloConfigChangeListener都会被触发更新。
+
+
+
+

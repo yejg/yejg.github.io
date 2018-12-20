@@ -1,9 +1,9 @@
 ---
 layout: post
 title: Apollo源码阅读笔记（一）
-categories: [Spring, Apollo]
-description: Apollo源码学习笔记
-keywords: apollo, 携程apollo
+categories: [Apollo]
+description: Apollo源码学习 —— 配置设置到Spring的env中
+keywords: apollo, 携程apollo, ctripcorp apollo
 ---
 
 ## Apollo源码阅读笔记（一）
@@ -63,10 +63,14 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
 在Spring应用启动的时候
 
 >   refresh()  –> invokeBeanFactoryPostProcessors(beanFactory) –> PropertySourcesProcessor.postProcessBeanFactory
+>
+>   —> initializePropertySources();
+>
+>   —> initializeAutoUpdatePropertiesFeature(beanFactory);
 
 就这样，Apollo的PropertySourcesProcessor就被调用起来了。
 
-在它的postProcessBeanFactory方法中，做了如下事情：
+在它的postProcessBeanFactory方法中依次调用initializePropertySources和initializeAutoUpdatePropertiesFeature，先来看initializePropertySources做了啥事情：
 
 1.  将NAMESPACE_NAMES （Multimap<Integer, String>）排序；
 
@@ -77,6 +81,8 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
     ​	此composite名为 ApolloPropertySources
 
     ​	ConfigPropertySource继承自spring-core的EnumerablePropertySource<Config>
+
+    ​	代码：composite.addPropertySource(XXX);
 
 4.  循环处理完 NAMESPACE_NAMES 之后，将其清空掉；
 
@@ -94,3 +100,4 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
 盗用官方的一张图来简单说明这个流程：
 
 ![](https://raw.githubusercontent.com/ctripcorp/apollo/master/doc/images/environment-remote-source.png)
+

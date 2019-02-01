@@ -1,3 +1,11 @@
+---
+layout: post
+title: 使用Swagger2时遇到的坑
+categories: [Spring]
+description: 使用Swagger2时遇到的问题
+keywords: Swagger2
+---
+
 #### 使用Swagger2时遇到的问题
 
 Swagger2使用起来很简单，加一个@EnableSwagger2注解，并引入如下依赖就ok了

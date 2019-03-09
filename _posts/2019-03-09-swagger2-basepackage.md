@@ -9,14 +9,16 @@ keywords: Swagger2
 #### Swagger2限定接口范围
 
 前面在[使用Swagger2时遇到的坑](/2019/01/11/problems-on-using-swagger2)中简单介绍了Swagger的使用。
-不过默认情况下，Swagger2会把项目中的所有接口都展示在列表里，特别是你用了Springboot/SpringCloud之后，各种内部health check的接口，单其实这些都没必要展示出来。
+
+不过默认情况下，Swagger2会把项目中的所有接口都展示在列表里，特别是你用了Springboot/SpringCloud之后，各种内部health check的接口，但其实这些都没必要展示出来。
+
 这时候，你就需要限定接口的范围了。
 
 
 
 ##### 实现方法
 
-增加一个配置，简要代码如下：
+增加一个配置类，简要代码如下：
 
 ```
 @Configuration
@@ -47,7 +49,7 @@ public class Swagger2Config {
 从代码看，跟目录范围相关的就是apis方法了，源码如下：
 
 ```
-// 此Predicate是com.google.common.base.Predicate，不是jdk8的那个，不过原理类似都是判断的谓词
+// 此Predicate是com.google.common.base.Predicate，不是jdk8的那个，不过原理类似 都是判断的谓词
 public ApiSelectorBuilder apis(Predicate<RequestHandler> selector) {
     requestHandlerSelector = and(requestHandlerSelector, selector);
     return this;
@@ -96,7 +98,6 @@ public class Swagger2Config {
 	@Bean
 	public Docket buildDocket() {
 		return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select()
-				// com.cairh.limnos.video.controller -- video starter
 				.apis(basePackage("com.yejg" + SEPARATOR + "com.springXXX"))
 				.paths(PathSelectors.any()).build();
 	}

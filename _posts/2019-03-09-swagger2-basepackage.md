@@ -1,9 +1,9 @@
 ---
 layout: post
 title: Swagger2限定接口范围
-categories: [Spring]
+categories: [Swagger2]
 description: Swagger2限定接口范围
-keywords: Swagger2
+keywords: Swagger2,Swagger2
 ---
 
 #### Swagger2限定接口范围

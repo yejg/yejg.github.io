@@ -1,9 +1,9 @@
 ---
 layout: post
 title: 使用Swagger2时遇到的坑
-categories: [Spring]
+categories: [Swagger2]
 description: 使用Swagger2时遇到的问题
-keywords: Swagger2
+keywords: Swagger2,Swagger
 ---
 
 #### 使用Swagger2时遇到的问题

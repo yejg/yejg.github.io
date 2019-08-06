@@ -75,10 +75,9 @@ Start-Class: com.xxx.XxxApplication
 
 ### 四、源码解析
 
-1. 先看看前面提说到的Main-Class  
+1. 先看看前面提说到的Main-Class
    即org.springframework.boot.loader.JarLauncher
-   
-```java
+    ```java
     public class JarLauncher extends ExecutableArchiveLauncher {
 
     	static final String BOOT_INF_CLASSES = "BOOT-INF/classes/";
@@ -105,124 +104,124 @@ Start-Class: com.xxx.XxxApplication
     	}
 
     }
-```
+    ```
 
-2. 跟着进父抽象类Launcher的launch方法  
-    在这个方法里面，通过getClassPathArchives()把jar包里的jar抽象成Archive对象列表。  
-    在Springboot loader中，抽象出了Archive概念。  
+2. 跟着进父抽象类Launcher的launch方法
+
+    在这个方法里面，通过getClassPathArchives()把jar包里的jar抽象成Archive对象列表。 
+    在Springboot loader中，抽象出了Archive概念。 
     一个archive可以是一个jar（JarFileArchive），也可以是一个文件目录（ExplodedArchive）。这些都可以理解为Springboot抽象出来的统一访问资源的层。
     此List<Archive>包括：
 
     - \BOOT-INF\classes （项目的class）  
-    - \BOOT-INF\lib 目录下的所有jar    
+    - \BOOT-INF\lib 目录下的所有jar  
 
 
 3. 遍历List<Archive>，获得每个Archive的URL，组成List<URL>
 4. 创建一个自定义的类加载器LaunchedURLClassLoader。这个类加载器继承自jdk自带的java.net.URLClassLoader
 5. 加载，创建MainMethodRunner
     看下Launcher的方法，逻辑很清晰
-```
-public abstract class Launcher {
-
-	/**
-	 * 1、获取List<Archive>
-	 * 2、创建LaunchedURLClassLoader
-	 * 3、找到main class
-	 * 4、加载
-	 */
-	protected void launch(String[] args) throws Exception {
-		JarFile.registerUrlProtocolHandler();
-		ClassLoader classLoader = createClassLoader(getClassPathArchives());
-		launch(args, getMainClass(), classLoader);
-	}
-
-	/**
-	 * 创建classloader
-	 */
-	protected ClassLoader createClassLoader(List<Archive> archives) throws Exception {
-		List<URL> urls = new ArrayList<URL>(archives.size());
-		for (Archive archive : archives) {
-			urls.add(archive.getUrl());
-		}
-		return createClassLoader(urls.toArray(new URL[urls.size()]));
-	}
-
-	/**
-	 * 创建LaunchedURLClassLoader
-	 */
-	protected ClassLoader createClassLoader(URL[] urls) throws Exception {
-		return new LaunchedURLClassLoader(urls, getClass().getClassLoader());
-	}
-
-	/**
-	 * 通过指定的classloader，加载main class
-	 */
-	protected void launch(String[] args, String mainClass, ClassLoader classLoader)
-			throws Exception {
-		Thread.currentThread().setContextClassLoader(classLoader);
-		createMainMethodRunner(mainClass, args, classLoader).run();
-	}
-
-	/**
-	 * 创建MainMethodRunner
-	 */
-	protected MainMethodRunner createMainMethodRunner(String mainClass, String[] args, ClassLoader classLoader) {
-		return new MainMethodRunner(mainClass, args);
-	}
-
-	/**
-	 * 抽象方法，用来获取main class
-	 */
-	protected abstract String getMainClass() throws Exception;
-
-	/**
-	 * 抽象方法，用来获取List<Archive>
-	 */
-	protected abstract List<Archive> getClassPathArchives() throws Exception;
-
-	protected final Archive createArchive() throws Exception {
-		ProtectionDomain protectionDomain = getClass().getProtectionDomain();
-		CodeSource codeSource = protectionDomain.getCodeSource();
-		URI location = (codeSource == null ? null : codeSource.getLocation().toURI());
-		String path = (location == null ? null : location.getSchemeSpecificPart());
-		if (path == null) {
-			throw new IllegalStateException("Unable to determine code source archive");
-		}
-		File root = new File(path);
-		if (!root.exists()) {
-			throw new IllegalStateException(
-					"Unable to determine code source archive from " + root);
-		}
-		return (root.isDirectory() ? new ExplodedArchive(root)
-				: new JarFileArchive(root));
-	}
-
+    ```java
+    public abstract class Launcher {
+    
+        /**
+         * 1、获取List<Archive>
+         * 2、创建LaunchedURLClassLoader
+         * 3、找到main class
+         * 4、加载
+         */
+        protected void launch(String[] args) throws Exception {
+            JarFile.registerUrlProtocolHandler();
+            ClassLoader classLoader = createClassLoader(getClassPathArchives());
+            launch(args, getMainClass(), classLoader);
+        }
+    
+        /**
+         * 创建classloader
+         */
+        protected ClassLoader createClassLoader(List<Archive> archives) throws Exception {
+            List<URL> urls = new ArrayList<URL>(archives.size());
+            for (Archive archive : archives) {
+                urls.add(archive.getUrl());
+            }
+            return createClassLoader(urls.toArray(new URL[urls.size()]));
+        }
+    
+        /**
+         * 创建LaunchedURLClassLoader
+         */
+        protected ClassLoader createClassLoader(URL[] urls) throws Exception {
+            return new LaunchedURLClassLoader(urls, getClass().getClassLoader());
+        }
+    
+        /**
+         * 通过指定的classloader，加载main class
+         */
+        protected void launch(String[] args, String mainClass, ClassLoader classLoader)
+                throws Exception {
+            Thread.currentThread().setContextClassLoader(classLoader);
+            createMainMethodRunner(mainClass, args, classLoader).run();
+        }
+    
+        /**
+         * 创建MainMethodRunner
+         */
+        protected MainMethodRunner createMainMethodRunner(String mainClass, String[] args, ClassLoader classLoader) {
+            return new MainMethodRunner(mainClass, args);
+        }
+    
+        /**
+         * 抽象方法，用来获取main class
+         */
+        protected abstract String getMainClass() throws Exception;
+    
+        /**
+         * 抽象方法，用来获取List<Archive>
+         */
+        protected abstract List<Archive> getClassPathArchives() throws Exception;
+    
+        protected final Archive createArchive() throws Exception {
+            ProtectionDomain protectionDomain = getClass().getProtectionDomain();
+            CodeSource codeSource = protectionDomain.getCodeSource();
+            URI location = (codeSource == null ? null : codeSource.getLocation().toURI());
+            String path = (location == null ? null : location.getSchemeSpecificPart());
+            if (path == null) {
+                throw new IllegalStateException("Unable to determine code source archive");
+            }
+            File root = new File(path);
+            if (!root.exists()) {
+                throw new IllegalStateException(
+                        "Unable to determine code source archive from " + root);
+            }
+            return (root.isDirectory() ? new ExplodedArchive(root)
+                    : new JarFileArchive(root));
+        }
 }
-```
+    ```
 6. 执行MainMethodRunner的run方法，启动主类的main
-```java
-public class MainMethodRunner {
 
-	private final String mainClassName;
-
-	private final String[] args;
-
-	public MainMethodRunner(String mainClass, String[] args) {
-		this.mainClassName = mainClass;
-		this.args = (args == null ? null : args.clone());
-	}
-
-    /**
-	 * 通过反射找到main方法，然后invoke
-	 */
-	public void run() throws Exception {
-		Class<?> mainClass = Thread.currentThread().getContextClassLoader()
-				.loadClass(this.mainClassName);
-		Method mainMethod = mainClass.getDeclaredMethod("main", String[].class);
-		mainMethod.invoke(null, new Object[] { this.args });
-	}
-
+    ```java
+    public class MainMethodRunner {
+    
+        private final String mainClassName;
+    
+        private final String[] args;
+    
+        public MainMethodRunner(String mainClass, String[] args) {
+            this.mainClassName = mainClass;
+            this.args = (args == null ? null : args.clone());
+        }
+    
+        /**
+         * 通过反射找到main方法，然后invoke
+         */
+        public void run() throws Exception {
+            Class<?> mainClass = Thread.currentThread().getContextClassLoader()
+                    .loadClass(this.mainClassName);
+            Method mainMethod = mainClass.getDeclaredMethod("main", String[].class);
+            mainMethod.invoke(null, new Object[] { this.args });
+        }
 }
 
-```
+    ```
 

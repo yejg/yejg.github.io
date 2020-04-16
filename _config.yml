@@ -2,7 +2,7 @@
 #   Main Configs   #
 # ---------------- #
 baseurl:
-url: https://blog.yejg.top
+url: https://yejg.top
 date_format: "ordinal"
 title: 钢仔
 subtitle: "奋斗的程序猿"

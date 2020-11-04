@@ -56,7 +56,7 @@ public class CurrentTimeMillisDemo {
 
 跑一下，输出结果：
 
->   100 System.currentTimeMillis() serial calls: 5300 ns
+>   100 System.currentTimeMillis() serial calls: 5300 ns  
 >   100 System.currentTimeMillis() parallel calls: 14874400 ns
 
 
@@ -67,7 +67,7 @@ public class CurrentTimeMillisDemo {
 
 #### 原因
 
-为什么相差这么大？（我也不知道，-_-||）这就是一句简单的获取时间呢
+为什么相差这么大？（我也不知道）这就是一句简单的获取时间呢
 
 百度谷歌之后，才大概知道原因了。
 
@@ -132,7 +132,7 @@ public class Clock {
 }
 ```
 
-这样写性能差多少呢？ 我的机器上跑了下，差不多省了四分之三，-_-||
+这样写性能差多少呢？ 我的机器上跑了下，差不多省了四分之三
 
 
 

@@ -131,7 +131,7 @@ mvn clean package -DskipTests -Pdev -X
 
 2.  检查配置文件中写的占位符用的分隔符。我上面写成 @clientAppId@ 是因为spring-boot-starter-parent.pom文件中，定义的是 
 
-    >   <resource.delimiter>@</resource.delimiter>
+    >   &lt;resource.delimiter&gt;@&lt;/resource.delimiter&gt;
 
 
 

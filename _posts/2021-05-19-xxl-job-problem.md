@@ -66,7 +66,7 @@ keywords: xxl-job, netty, spring
 
 
 
-### 2.2、方法二：原因
+### 2.2、原因
 
 mavan在处理依赖的时候，有如下两个原则：
 - 最短路径优先

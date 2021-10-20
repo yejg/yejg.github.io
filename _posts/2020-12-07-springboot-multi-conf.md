@@ -1,8 +1,8 @@
 ---
 layout: post
-title: springboot应用多环境配置
+title: springboot应用多环境配置-特殊场景
 categories: [Springboot]
-description: springboot自定义配置文件多环境配置
+description: springboot自定义配置文件多环境配置-特殊场景
 keywords: springboot, maven, profile
 ---
 

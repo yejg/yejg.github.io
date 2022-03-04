@@ -2,7 +2,7 @@
 layout: post
 title: ThreadLocal
 categories: [Java]
-description: ThreadLocal
+description: 深入理解ThreadLocal, InheritableThreadLocal, TransmittableThreadLocal, FastThreadLocal
 keywords: java, ThreadLocal, InheritableThreadLocal, TransmittableThreadLocal, FastThreadLocal
 ---
 

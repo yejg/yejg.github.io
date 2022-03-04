@@ -28,7 +28,7 @@ ThreadLocal很容易让人望文生义，想当然地认为是一个“本地线
 
 - set：为当前线程设置变量，当前ThreadLocal作为索引
 - get：获取当前线程变量，当前ThreadLocal作为索引
-- initialValue：（需要子类实现，默认mull）执行get时，发现线程本地变量为null，就会执行initialValue的内容
+- initialValue：（需要子类实现，默认null）执行get时，发现线程本地变量为null，就会执行initialValue的内容
 - remove：清空当前线程的ThreadLocal索引与映射的元素
 
 

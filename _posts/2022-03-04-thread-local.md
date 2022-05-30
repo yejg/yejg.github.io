@@ -35,7 +35,7 @@ ThreadLocal很容易让人望文生义，想当然地认为是一个“本地线
 
 ## 底层结构及逻辑
 
-![](https://gitee.com/yejg1212/pic-bed/raw/master/img/202203021738483.jpg)
+![](/images/posts/pic-bed-master/202203021738483.jpg)
 
 ### Thread对象的属性
 
@@ -170,7 +170,7 @@ private void set(ThreadLocal<?> key, Object value) {
 
 结合代码，set的过程如下图
 
-![](https://gitee.com/yejg1212/pic-bed/raw/master/img/202203021800946.jpg)
+![](/images/posts/pic-bed-master/202203021800946.jpg)
 
 
 
@@ -178,7 +178,7 @@ private void set(ThreadLocal<?> key, Object value) {
 
 线性探测的方式解决hash冲突的问题，如果没有找到空闲的slot，就不断往后尝试，直到找到一个空闲的位置，插入entry
 
-![](https://gitee.com/yejg1212/pic-bed/raw/master/img/202203041432166.png)
+![](/images/posts/pic-bed-master/202203041432166.png)
 
 
 
@@ -256,7 +256,7 @@ static class Entry extends WeakReference<ThreadLocal<?>> {
 
 结合到这里的场景，当ThreadLocal在没有外部强引用的时候，一旦发生gc，key就会被回收。
 
-![](https://gitee.com/yejg1212/pic-bed/raw/master/img/202203031643672.png)
+![](/images/posts/pic-bed-master/202203031643672.png)
 
 
 
@@ -421,7 +421,7 @@ start
 
 #### 整个过程的完整时序图
 
-![](https://gitee.com/yejg1212/pic-bed/raw/master/img/202203041359342.png)
+![](/images/posts/pic-bed-master/202203041359342.png)
 
 
 

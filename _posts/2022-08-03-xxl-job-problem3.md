@@ -84,7 +84,7 @@ keywords: xxl-job, netty, Connection reset by peer
 
 阿里云SLB监听机制：
 
-![](/images/posts/xxl-job/ali-slb.jpg)
+![](/images/posts/xxl-job/ali-slb.png)
 
 
 
@@ -92,8 +92,10 @@ keywords: xxl-job, netty, Connection reset by peer
 
 
 
-3、参考资料
+## 3、参考资料
+
 [xxl-job issue1088](https://github.com/xuxueli/xxl-job/issues/1088)
+
 [阿里云SLB](https://help.aliyun.com/document_detail/171710.htm)
 
 

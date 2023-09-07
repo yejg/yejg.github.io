@@ -317,14 +317,12 @@ public void setPoolMaxSize(int poolMaxSize) {
 项目里面的mybatis.xml中配置的是：
 
 ```xml
-	<plugins>
-        <plugin
-                interceptor="com.github.miemiedev.mybatis.paginator.OffsetLimitInterceptor">
-            <property name="dialectClass"
-                      value="com.github.miemiedev.mybatis.paginator.dialect.MySQLDialect"/>
-            <property name="asyncTotalCount" value="false"/>
-        </plugin>
-    </plugins>
+<plugins>
+	<plugin interceptor="com.github.miemiedev.mybatis.paginator.OffsetLimitInterceptor">
+		<property name="dialectClass" value="com.github.miemiedev.mybatis.paginator.dialect.MySQLDialect"/>
+		<property name="asyncTotalCount" value="false"/>
+	</plugin>
+</plugins>
 ```
 
 asyncTotalCount=false，那为啥实际情况是使用的Pool线程池去异步执行的呢？

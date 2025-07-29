@@ -31,7 +31,7 @@ public class Swagger2Config {
 		      .apis(RequestHandlerSelectors.basePackage("com.yejg")).paths(PathSelectors.any()).build();
 	}
 	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder().title("接口文档").description("描述文字...").termsOfServiceUrl("https://yejg.top").version("V1.0").build();
+		return new ApiInfoBuilder().title("接口文档").description("描述文字...").termsOfServiceUrl("https://yejg.github.io").version("V1.0").build();
 	}
 }
 ```
@@ -104,7 +104,7 @@ public class Swagger2Config {
 
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder().title("接口文档").description("描述文字...")
-				.termsOfServiceUrl("https://yejg.top").version("V1.0").build();
+				.termsOfServiceUrl("https://yejg.github.io").version("V1.0").build();
 	}
 
 

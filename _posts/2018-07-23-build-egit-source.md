@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Eclipse插件改造——EGit源码编译
-categories: [eclipse plug-in, egit]
+categories: [eclipse plugin, egit]
 description: EGit源码编译
 keywords: eclipse, plugin, plug-in, egit
 ---

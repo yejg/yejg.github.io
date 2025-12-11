@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Eclipse插件改造——自定义代码检查规则
-categories: [eclipse plug-in, p3c]
+categories: [eclipse plugin, p3c]
 description: 添加自定义代码检查规则
 keywords: eclipse, plugin, plug-in, smartfox, p3c
 ---
@@ -70,7 +70,7 @@ keywords: eclipse, plugin, plug-in, smartfox, p3c
 		}
 	}
 
-	```	
+	```
 3. 参考pmd源码中的xml文件，建一个自己的规则集，例如：
 	
 	```
@@ -112,11 +112,13 @@ keywords: eclipse, plugin, plug-in, smartfox, p3c
 ### 整理思路：
 
 > [SpringMVC的Controller类]
->>  如何判断一个类是MVC中的C呢？
->>> 类头上有@Controller或者@RestController注解标记
+> >  如何判断一个类是MVC中的C呢？
+> >
+> >  > 类头上有@Controller或者@RestController注解标记
 
 > [不能直接使用Mapper或DAO]
->> C类中一般是通过@Autowired或者@Resource注入Mapper的
+>
+> > C类中一般是通过@Autowired或者@Resource注入Mapper的
 
 综上，我们可以这么处理：
 > 当前类标记了 @Controller 或 @RestController，且有通过Autowired或Resource来注入 XXXMapper 或 XXXDao

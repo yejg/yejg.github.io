@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Eclipse插件改造——AlibabaSmartfoxEclipse插件源码编译
-categories: [eclipse plug-in, p3c]
+categories: [eclipse plugin, p3c]
 description: Alibaba smartfox-eclipse插件源码编译
 keywords: eclipse, plugin, plug-in, p3c, smartfox
 ---
@@ -17,8 +17,10 @@ https://p3c.alibaba.com/plugin/eclipse/update
 #### 环境准备
 - maven 3+
 - Tycho环境准备
+  
   > 配置Tycho Configurator，参考[用Tycho构建RPC程序](http://chnic.iteye.com/blog/2201139)
 - 安装Kotlin插件
+  
   > 在eclipse market中搜索Kotlin，install，重启
 
 
